@@ -1,0 +1,225 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+/* Functions Prototype*/
+void player1();
+void player2();
+void player3();
+void player4();
+
+int MaxPlayer1;             //global variable for max card repeated of player 1
+int MaxPlayer2;             //global variable for max card repeated of player 2
+int MaxPlayer3;             //global variable for max card repeated of player 3
+int MaxPlayer4;             //global variable for max card repeated of player 4
+
+int MaxCard(int arr[]);     //fuction prototype for max similar cards of every player
+
+void MaxPlayer();           //function to compare between max similar cards of the players
+
+int main()
+{
+
+    printf("Shuffiling the deck...\n\n");
+    printf("distributing the cards among the players...");
+
+
+    player1();                    //call player 1 function
+    player2();                    //call player 2 function
+    player3();                    //call player 3 function
+    player4();                    //call player 4 function
+
+    MaxPlayer();                  //call MaxPlayer function 
+    return 0;
+
+}
+
+void player1()
+{
+    printf("\n--------------------------------");
+    printf("\nplayer #1 got : \n");
+    srand(time(NULL));
+
+    int i, j, a;
+    int freqOfCards[4] = { 0 };
+    const char* cardsType[4] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+
+    /* shuffling the deck for player 1 */
+
+        for (j = 0; j < 13; j++)
+        {
+
+            ++freqOfCards[rand() % 4];
+
+        }
+    for (i = 0; i < 4; i++)
+    {
+        printf("%d %s\n", freqOfCards[i], cardsType[i]);
+
+    }
+
+    int max = Max(freqOfCards, &a);        //find the max card for player 1;         
+    MaxPlayer1 = MaxCard(freqOfCards);     //assign the max card to global variable
+    printf("\nPlayer1 have %d similar cards of %s\n\n", freqOfCards[max], cardsType[a]);
+}
+
+void player2()
+{
+    printf("\n--------------------------------");
+    printf("\nplayer #2 got : \n");
+    time(NULL);
+
+    int i, j, a;
+    int freqOfCards[4] = { 0 };
+    const char* cardsType[4] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+
+    /* shuffling the deck for player 2 */
+
+        for (j = 0; j < 13; j++)
+        {
+
+            ++freqOfCards[rand() % 4];
+
+        }
+    for (i = 0; i < 4; i++)
+    {
+        printf("%d %s\n", freqOfCards[i], cardsType[i]);
+
+    }
+
+    int max = Max(freqOfCards, &a);           //find the max card for player 2
+    MaxPlayer2 = MaxCard(freqOfCards);        //assign the max card to global variable
+    printf("\nPlayer2 have %d similar cards of %s \n\n ", freqOfCards[max], cardsType[a]);
+
+}
+
+void player3()
+{
+    printf("\n--------------------------------");
+    printf("\nplayer #3 got : \n");
+    time(NULL);
+
+    /* shuffling the deck for player 3 */
+
+        int i, j, a;
+    int  freqOfCards[4] = { 0 };
+    const char* cardsType[4] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+
+    for (j = 0; j < 13; j++)
+    {
+        ++freqOfCards[rand() % 4];
+
+    }
+    for (i = 0; i < 4; i++)
+    {
+        printf("%d %s\n", freqOfCards[i], cardsType[i]);
+
+    }
+
+    int max = Max(freqOfCards, &a);             //find the max card for player 3
+    MaxPlayer3 = MaxCard(freqOfCards);          //assign the max card to global variable
+    printf("\nPlayer3 have %d similar cards of %s\n\n", freqOfCards[max], cardsType[a]);
+}
+
+void player4()
+{
+    printf("\n--------------------------------");
+    printf("\nplayer #4 got : \n");
+    time(NULL);
+
+    /* shuffling the deck for player 4 */
+
+        int i, j, a;
+    int  freqOfCards[4] = { 0 };
+    const char* cardsType[4] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+
+    for (j = 0; j < 13; j++)
+    {
+        ++freqOfCards[rand() % 4];
+
+    }
+    for (i = 0; i < 4; i++)
+    {
+        printf("%d %s\n", freqOfCards[i], cardsType[i]);
+
+    }
+
+    int max = Max(freqOfCards, &a);           //find the max card for player 4
+    MaxPlayer4 = MaxCard(freqOfCards);        //assign the max card to global variable
+    printf("\nPlayer4 have %d similar cards of %s\n", freqOfCards[max], cardsType[a]);
+
+    printf("\n\n--------------------------------\n\n\n\n");
+}
+
+int Max(int arr[], int* k) //define max function
+{
+
+    int max = 0;
+    int i;
+    for (i = 0; i < 4; i++) {
+
+        if (arr[i] > max) {
+            max = arr[i];
+            *k = i;
+
+        }
+    }
+    return max, * k;
+
+}
+
+int MaxCard(int arr[])  //define max card function
+{
+    int max = arr[0];
+
+    if (arr[1] > max) {
+        max = arr[1];
+
+    }
+    if (arr[2] > max) {
+        max = arr[2];
+
+    }
+    if (arr[3] > max) {
+        max = arr[3];
+    }
+    return max;
+
+}
+
+void MaxPlayer()        //define maxplayer function
+{
+    int i;
+    int max = 0, counter;
+
+    int player[4] = { MaxPlayer1,MaxPlayer2,MaxPlayer3,MaxPlayer4 };
+
+    for (i = 0; i < 4; i++)
+    {
+
+        if (player[i] > max)
+        {
+            max = player[i];
+            counter = i + 1;
+        }
+    }
+    //if statement for detemine (draw) if ALL players got the same number of similar cards
+    if (max == player[0] && max == player[1] || max == player[0] && max == player[2] || max == player[0] && max == player[3])
+    {
+        printf("\t\t* DRAW *");
+    }
+
+    else if (max == player[1] && max == player[2] || max == player[1] && max == player[3]) //if statement for detemine (draw) if top 3 players got the same number of similar cards
+    {
+        printf("\t\t* DRAW *");
+    }
+    else if (max == player[2] && max == player[3]) //if statement for detemine (draw) if top 2 players got the same number of similar cards
+    {
+        printf("\t\t* DRAW *");
+    }
+    else if (max == MaxPlayer1 || max == MaxPlayer2 || max == MaxPlayer3 || max == MaxPlayer4) //if statement for detemine the winner player
+    {
+        printf("^^^^^^^^^^^ the winner is player #%d he has %d similar cards ^^^^^^^^^^^", counter, max);
+    }
+    printf("\n\n\n");
+}
